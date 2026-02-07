@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>VIRTUAL HARP</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css">
+  <style>
+      body {
+        background-color: #111;
+        color: #fff;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+      h1 {
+        font-size: 2rem;
+        margin-bottom: 2rem;
+      }
+      .button {
+        width: 240px;
+        height: 100px;
+        font-size: 1.5rem;
+        margin: 1rem;
+        border-radius: 10px;
+      }
+      .single { background-color: #00d1b2; color: white; }
+      .chord { background-color: #ff3860; color: white; }
+      .button:hover { transform: scale(1.05); }
+
+      /* 全畫面淡出效果 */
+      .fade-out {
+        opacity: 0;
+        transition: opacity 0.5s ease-in-out;
+      }
+      body {
+        background-color: #000;  /* 你的要求：黑色背景 */
+      }
+    </style>
+</head>
+
+<body>
+  <div id="harp-animation"></div>
+  <h1>虛擬撥弦樂器系統</h1>
+  <div>
+    <a onclick="transitionTo('hands.html')" class="button single">單音演奏模式</a>
+    <a onclick="transitionTo('pose.html')" class="button chord">和弦伴奏模式</a>
+  </div>
+  <script src="./js/harp_animation.js"></script>
+  <script>
+  function transitionTo(url) {
+    document.body.classList.add("fade-out");
+
+    setTimeout(() => {
+      window.location.href = url;
+    }, 500);  // 和 CSS transition 同時長
+  }
+  </script>
+
+</body>
+</html>
