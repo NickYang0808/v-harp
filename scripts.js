@@ -21,6 +21,7 @@ const SMOOTH_FACTOR = 0.15;
 function getYouTubeID(url) {
     const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
     const match = url.match(regExp);
+    console.log("解析後id",(match && match[2].length === 11) ? match[2] : null);
     return (match && match[2].length === 11) ? match[2] : null;
 }
 
