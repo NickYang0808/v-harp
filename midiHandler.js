@@ -54,23 +54,16 @@ async function loadAndAnalyzeMidi(midiUrl, firstBeatOffset = 0) {
     const secondsPerMeasure = (60 / bpm) * 4; // 假設 4/4 拍
     const totalMeasures = Math.ceil(midi.duration / secondsPerMeasure);
 
-    // --- B. 尋找左手軌道與判定 ---
-    const leftTrack =
-      midi.tracks.find(
-        (t) =>
-          t.name.toLowerCase().includes("left") ||
-          t.name.toLowerCase().includes("bass") ||
-          t.name.toLowerCase().includes("l.h"),
-      ) ||
-      midi.tracks[1] ||
-      midi.tracks[0];
-
-    const hasLeftHand = leftTrack && leftTrack.notes.length > 0;
+    // --- B. 簡化判定：抓取第一個有音符的軌道 ---
+    // 不再過濾名稱，直接找第一個 notes.length > 0 的軌道
+    const activeTrack = midi.tracks.find((t) => t.notes.length > 0) || midi.tracks[0];
+    const totalNotes = activeTrack ? activeTrack.notes.length : 0;
+    const hasLeftHand = totalNotes > 0; // 為了不改動後續 scripts.js 呼叫，保留名稱但邏輯改為「是否有音符」
 
     // --- C. 提取和弦序列並計算影片對齊時間 ---
     const chordGroups = {};
-    if (leftTrack) {
-      leftTrack.notes.forEach((note) => {
+    if (activeTrack) {
+      activeTrack.notes.forEach((note) => {
         // 原有的 MIDI 時間戳記
         const timeKey = note.time.toFixed(3);
         if (!chordGroups[timeKey]) chordGroups[timeKey] = [];
@@ -104,7 +97,7 @@ async function loadAndAnalyzeMidi(midiUrl, firstBeatOffset = 0) {
     console.log(`- BPM: ${bpm} (每小節 ${secondsPerMeasure.toFixed(2)} 秒)`);
     console.log(`- 第一拍偏移 (Offset): ${firstBeatOffset} 秒`);
     console.log(
-      `- 左手判定: ${hasLeftHand ? "✅ 已同步和弦" : "❌ 無和弦軌 (預設 C)"}`,
+      `- 狀態判定: ${hasLeftHand ? "✅ 軌道解析成功" : "❌ 無有效音符"}`,
     );
     console.log(
       `- 第一個和弦影片觸發點: ${progression.length > 0 ? progression[0].videoTime.toFixed(2) : "N/A"} 秒`,
@@ -113,6 +106,7 @@ async function loadAndAnalyzeMidi(midiUrl, firstBeatOffset = 0) {
     return {
       bpm,
       totalMeasures,
+      totalNotes,
       hasLeftHand,
       progression, // 內含 videoTime 供同步使用
       firstBeatOffset,
