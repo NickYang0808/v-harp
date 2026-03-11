@@ -50,10 +50,10 @@ const IMUSE_SONGS = [
     firstBeatOffset: 2.5,
   },
   {
-    title: "hi",
+    title: "hi34",
     category: "華語歌曲",
     url: "./midi/朋友.mid",
-    youtubeUrl: "https://www.youtube.com/watch?v=9bZkp7q19f0",
+    youtubeUrl: "https://www.youtube.com/watch?v=IiFm7AWP9n4",
     firstBeatOffset: 2.5,
   },
   {
