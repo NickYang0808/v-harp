@@ -90,18 +90,16 @@
   height:30vh;
   background-color: rgb(255, 255, 255);
   display: flex;
-  align-items: stretch;
+  align-items: center;
 } 
 .song-info{
   padding-left: 10%;
   padding-right: 10%;
   box-sizing: border-box;
-  width:50%;
-  height:50%;
+  width:80%;
+  height:80%;
   border:5px solid red;
 }
-
-
 
 /* 手機版適配：若螢幕太窄，改為垂直排列 */
 @media (max-width: 768px) {
