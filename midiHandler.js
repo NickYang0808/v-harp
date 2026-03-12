@@ -147,19 +147,38 @@ function getActiveChord(currentTime, midiData) {
  * @returns {string} - 和弦名稱 (例如 "C Major")
  */
 function chordAnalyze(notes) {
-  if (!notes || notes.length < 2) return "無音符";
+  if (!notes || notes.length < 2) return "";
 
   const root = notes[0];
-  const third = notes[1];
-  const interval = third - root; // 計算根音與三音的半音差
+  const rootName = ["C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", "B"][root % 12];
 
-  // 取得根音名稱 (C, C#, D...)
-  const noteNames = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
-  const rootName = noteNames[root % 12];
+  // 計算所有音符相對於根音的半音距離
+  // 例如 [60, 64, 67, 72] 會變成 "4-7-12"
+  const intervals = notes.slice(1).map(n => n - root).join('-');
 
-  // 判斷大調 (4個半音) 或 小調 (3個半音)
-  if (interval === 4) return `${rootName} Major`;
-  if (interval === 3) return `${rootName} Minor`;
-  
-  return `${rootName} (特殊和弦)`;
+  switch (intervals) {
+    case "4-7-12": // 跟音、大三度、五度、八度
+      return `${rootName}`;
+      
+    case "3-7-12": // 跟音、小三度、五度、八度
+      return `${rootName}m`;
+      
+    case "4-7-11": // 跟音、大三度、五度、大七度
+      return `${rootName}maj7`;
+      
+    case "3-7-10": // 跟音、小三度、五度、小七度
+      return `${rootName}m7`;
+      
+    case "4-7-10": // 跟音、大三度、五度、小七度
+      return `${rootName}7`;
+
+    // 如果之後有 3 音的和弦 (無八度) 也可以在這邊補
+    case "4-7": 
+      return `${rootName}`;
+    case "3-7":
+      return `${rootName}m`;
+
+    default:
+      return `${rootName}?`; // 若不符合上述規則，僅顯示根音名稱
+  }
 }
