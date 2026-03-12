@@ -73,7 +73,21 @@ function onPlayerStateChange(event) {
   }
   //isVideoPlaying = event.data === YT.PlayerState.PLAYING;
 }
+//對齊影片
+let timeRequestId;
 
+function updateVideoCounter(){
+  const timeDisplay = document.getElementById('video-current-time');
+
+  if(player&& typeof player.getCurrentTime==="function"&&timeDisplay){
+    const currentTime = player.getCurrentTime();
+    timeDisplay.innertext=currentTime.toFixed(2);
+    
+    //baseOffset對齊運算
+    //check MIDI event
+  }
+  timeRequestId=requestAnimationFrame(updateVideoCounter);
+}
 // --- 4. 換歌邏輯 (放在最外層，確保 Selector 叫得到) ---
 window.switchSong = async function (selectedSong) {
   if (!selectedSong) return;
@@ -107,11 +121,8 @@ window.switchSong = async function (selectedSong) {
       selectedSong.url,
       selectedSong.firstBeatOffset || 0,
     );
-    
     const bpmDisplay=document.getElementById('song-bpm-display');
-    
-    if(bpmDisplay) bpmDisplay.innerText = `BPM: ${currentMidiData.bpm} | 音符: ${currentMidiData.totalNotes}`;
-    
+    if(bpmDisplay) bpmDisplay.innerText = `BPM: ${currentMidiData.bpm} | 音符: ${currentMidiData.totalNotes}`; 
     tryCueVideo();
   } catch (err) {
     console.error("切換失敗", err);
@@ -160,21 +171,7 @@ window.onload = () => {
     });
   }
 };
-//對齊影片
-let timeRequestId;
 
-function updateVideoCounter(){
-  if(player&& typeof player.getCurrentTime==="function"){
-    const currentTime = player.getCurrentTime();
-    const timeDisplay = document.getElementById('video-current-time');
-
-    if(timeDisplay){
-      timeDisplay.innertext=currentTime.toFixed(2);
-    }
-    //check MIDI event
-  }
-  timeRequestId=requestAnimationFrame(updateVideoCounter);
-}
 
 // --- 6. 核心計算 (保留你原本的所有主程式邏輯) ---
 async function onResults(results) {
