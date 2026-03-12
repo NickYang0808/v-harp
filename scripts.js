@@ -65,7 +65,7 @@ function onPlayerReady(event) {
 function onPlayerStateChange(event) {
   if(event.data==YT.PlayerState.PLAYING){
     console.log("START VIDEO");
-    dateVideoCounter();
+    updateVideoCounter();
   }else{
     console.log("VIDEO PAUSE OR STOP");
     cancelAnimationFrame(timeRequestId);
