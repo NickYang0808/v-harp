@@ -34,8 +34,14 @@
         <script src="https://cdn.jsdelivr.net/npm/webmidi@3.1.1/dist/iife/webmidi.iife.js"></script>
         <!--web synth-->
         <script type="module">
-        import MidiSynth from 'https://tsai1010.github.io/scripts/midisynth-gui.js';
-        window.sunth = new MidiSynth('#composer-slot');
+            console.log("載入中..")
+            import MidiSynth from 'https://tsai1010.github.io/scripts/midisynth-gui.js';
+            try {
+            window.synth = new MidiSynth('#composer-slot');
+            console.log("✅ MidiSynth 實體化成功:", window.synth);
+            } catch (e) {
+                console.error("❌ MidiSynth 初始化失敗:", e);
+            }
         </script>
         <!--tone.js-->
         <script src="https://unpkg.com/tone"></script>
