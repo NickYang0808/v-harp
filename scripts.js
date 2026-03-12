@@ -26,14 +26,13 @@ function getYouTubeID(url) {
   return match && match[2].length === 11 ? match[2] : null;
 }
 
-function getActiveChord(videoTime, midiData) {
-  if (!isVideoPlaying || !midiData || !midiData.hasLeftHand)
-    return [60, 64, 67];
-  const activeProg = [...midiData.progression]
-    .reverse()
-    .find((p) => videoTime >= p.videoTime);
-  return activeProg ? activeProg.notes : [60, 64, 67];
-}
+// function getActiveChord(videoTime, midiData) {
+//   if (!midiData || !midiData.progression) return [];
+//   const activeProg = [...midiData.progression]
+//     .reverse()
+//     .find((p) => videoTime >= p.videoTime);
+//   return activeProg ? activeProg.notes : [60, 64, 67];
+// }
 
 // --- 3. YouTube API 核心 (必須在最外層，絕對不能放進 window.onload) ---
 // 這樣 YouTube API 載入時才叫得到它
@@ -66,7 +65,7 @@ function onPlayerReady(event) {
 function onPlayerStateChange(event) {
   if(event.data==YT.PlayerState.PLAYING){
     console.log("START VIDEO");
-    updateVideoCounter();
+    dateVideoCounter();
   }else{
     console.log("VIDEO PAUSE OR STOP");
     cancelAnimationFrame(timeRequestId);
@@ -134,7 +133,6 @@ function updateVideoCounter(){
         console.log(`當前和弦內音符：[${activeNotes.join(',')}]`);
         lastChordString=currentStr;
       }
-      
     }
     //baseOffset對齊運算
     //check MIDI event
