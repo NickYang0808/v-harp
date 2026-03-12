@@ -70,7 +70,6 @@ async function loadAndAnalyzeMidi(midiUrl, firstBeatOffset = 0) {
         chordGroups[timeKey].push({
           name: note.name,
           midi: note.midi,
-          velocity: note.velocity,
         });
       });
     }
@@ -80,11 +79,13 @@ async function loadAndAnalyzeMidi(midiUrl, firstBeatOffset = 0) {
       .sort((a, b) => parseFloat(a) - parseFloat(b))
       .map((timeStr) => {
         const midiTime = parseFloat(timeStr);
+
+        const sortedNotes=chordGroups[timeStr].sort((a,b)=>a-b);
+
         return {
           time: midiTime,
-          // 重要：算出在 YouTube 影片中對應出現的絕對秒數
           videoTime: midiTime + firstBeatOffset,
-          notes: chordGroups[timeStr].map((n) => n.midi),
+          notes: sortedNotes,
         };
       });
 
@@ -126,7 +127,7 @@ async function loadAndAnalyzeMidi(midiUrl, firstBeatOffset = 0) {
  * @returns {Array} - MIDI 編號陣列 (例如 [60, 64, 67])
  */
 function getActiveChord(currentTime, midiData) {
-  // 1. 如果沒資料、沒左手、或是影片沒在跑，回傳預設 C 和弦
+  
   if (!midiData || !midiData.hasLeftHand || !midiData.progression) {
     return [60, 64, 67]; // 預設 C Major
   }

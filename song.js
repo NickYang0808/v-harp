@@ -4,7 +4,7 @@ const IMUSE_SONGS = [
     category: "華語歌曲",
     url: "./midi/月亮代表我的心.mid",
     youtubeUrl: "https://www.youtube.com/watch?v=IiFm7AWP9n4",
-    firstBeatOffset: 12.5, //0:12.8秒左右,結束於1:52
+    firstBeatOffset: 12.85, //0:12.8秒左右,結束於1:52
   },
   {
     title: "聽海",

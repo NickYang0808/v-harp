@@ -120,12 +120,15 @@ let timeRequestId;
 function updateVideoCounter(){
   const timeDisplay = document.getElementById('video-current-time');
 
-  if(timeDisplay&&player&& typeof player.getCurrentTime==="function"){
+  if(timeDisplay&&player&& player.getCurrentTime){
     const currentTime = player.getCurrentTime();
-
-    console.log(`video time : ${currentTime.toFixed(3)}s`);
-    timeDisplay.innerText=currentTime.toFixed(2);
+    timeDisplay.innerText=currentTime.toFixed(3);
     
+    if(currentMidiData && currentMidiData.progression){
+      const activeNotes=getActiveChord(currentTime,currentMidiData);
+      //console test
+      console.log(`當前和弦內音符：[${activeNotes.join(',')}]`);
+    }
     //baseOffset對齊運算
     //check MIDI event
   }
