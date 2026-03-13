@@ -35,8 +35,8 @@ body {
 /*navbar*/
 .navbar {
   flex:0 0 5vh;
-  background: rgba(0, 0, 0, 0.5) !important;
-  backdrop-filter: blur(5px);
+  background: rgba(0,0,0,0.1) !important;
+  backdrop-filter: blur(8px);
 }
 
 /* Main */
@@ -100,8 +100,8 @@ body {
 /*Synth and effect*/
 /* 針對按鈕邊框與文字 */
 .btn-outline-info {
-    color: #8b5a2b !important;        /* 木質棕 */
-    border-color: #8b5a2b !important;
+    color: var(--paper-white) !important;        /* 木質棕 */
+    border-color: var(--paper-white) !important;
 }
 
 /* 6. 下方資訊區：古籍感 */
