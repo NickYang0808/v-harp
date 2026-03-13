@@ -23,14 +23,16 @@ body.ocean {background-image: url('assets/ocean.webp');}
 body.pub {background-image: url('assets/pub.webp');}
 
 body {
-  transition: background-image 1.5s ease-in-out;
+  background-image: url('assets/night.webp');
+  
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
   background-repeat: no-repeat;
   background-blend-mode: normal;
   background-color: transparent;
-
+  /*換背景*/
+  transition: background-image 1.5s ease-in-out;
   height: 100vh;
   display: flex;
   flex-direction: column;

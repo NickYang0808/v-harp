@@ -142,7 +142,7 @@ window.onload = () => {
   canvasCtx = canvasElement.getContext("2d");
   canvasElement.width = 1280;
   canvasElement.height = 640;
-
+  document.body.className="";//初始化襪defualt紙
   const pose = new Pose({
     locateFile: (file) =>
       `https://cdn.jsdelivr.net/npm/@mediapipe/pose/${file}`,
