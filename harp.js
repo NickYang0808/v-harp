@@ -80,13 +80,14 @@ class Harp {
 
   _triggerString(index, chord) {
     //寫和弦四音對應mapping 7弦處
-    const note = (chord && chord.notes) ? chord.notes[index] : null;
+    const note = (Array.isArray(chord))?chord[index]:null;
 
     if(note){
       sendMidiToSynth(note);
       //debug用
       console.log(`撥動${index}弦，音高${note}`);
-    }
+    }else console.log(`第${index}沒音符`);//可測試和弦完整性
+
     //visual feedback
     this.strings[index].brightness = 1.0; 
     this.strings[index].offset = (Math.random() - 0.5) * 0.06;
