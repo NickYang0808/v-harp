@@ -7,7 +7,7 @@
     --accent-gold: #d4af37;    /* 金色重點色 (取代藍色) */
 }
 .text-info {
-  color:#f5f2e8;
+  color:#f5f2e8 !important;
 }
 
 body {
