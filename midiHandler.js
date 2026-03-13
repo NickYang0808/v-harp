@@ -175,7 +175,6 @@ function mappingToString(activeNotes) {
   for (let i = 4; i <= 6; i++) {
     finalHarpNotes[i] = finalHarpNotes[i - 3] + 12;
   }
-
   return finalHarpNotes; 
 }
 /**
