@@ -11,13 +11,23 @@ body {
     background-color: #1a120b; /* 極深木紋底色 */
     color: var(--paper-white);
     font-family: 'JetBrains Mono', 'PingFang TC', sans-serif;
-    overflow-x: hidden;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
 }
-
+.navbar {
+  flex:0 0 5vh;
+}
+.function-area{
+  flex:0 0 30vh;
+  margin-top: 0;
+}
 /* 2. 佈局容器 (搬移自 HTML style) */
 .main-container {
-    height: 75vh;
-    padding-top: 20px;
+    height: 0 0 65vh;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 
 /* 3. 側邊面板：改為深木色質感 */
@@ -27,9 +37,13 @@ body {
     border: 1px solid rgba(139, 90, 43, 0.3);
     border-radius: 15px;
     height: 100%;
+    overflow: hidden;
     box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);
 }
-
+#songList {
+  flex-grow:1;
+  overflow-y: auto;
+}
 /* 4. 畫布區域：給它一個相框感 */
 .canvas-wrapper {
     background: #000;
