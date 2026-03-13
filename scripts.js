@@ -139,10 +139,6 @@ window.onload = () => {
   canvasElement.width = 1280;
   canvasElement.height = 640;
 
-  WebMidi.enable().then(() => {
-    midiOutput = WebMidi.outputs[0];
-  });
-
   const pose = new Pose({
     locateFile: (file) =>
       `https://cdn.jsdelivr.net/npm/@mediapipe/pose/${file}`,
@@ -258,7 +254,7 @@ async function onResults(results) {
     canvasCtx.save();
     canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
     if (myHarp)
-      myHarp.update(smoothFrame, fingerPoints, currentChord, midiOutput);
+      myHarp.update(smoothFrame, fingerPoints, currentChord);
     mySkeleton.draw(
       canvasCtx,
       displayLandmarks,

@@ -18,7 +18,7 @@ class Harp {
     }));
   }
 
-  update(frame, fingerPoints, currentChord, midiOutput) {
+  update(frame, fingerPoints, currentChord) {
     const now = Date.now();
     const canTrigger = now - this.lastTriggerTime > this.stringTriggerCooldown;
 
@@ -42,7 +42,7 @@ class Harp {
             const fingerID = finger.id || 0;
 
             if (!this.strings[i].wasInside[fingerID] && isInside && canTrigger) {
-                this._triggerString(i, currentChord, midiOutput);
+                this._triggerString(i, currentChord);
                 this.lastTriggerTime = now;
             }
             this.strings[i].wasInside[fingerID] = isInside;
@@ -78,14 +78,14 @@ class Harp {
     };
   }
 
-  _triggerString(index, chord, output) {
+  _triggerString(index, chord) {
     //寫和弦四音對應mapping 7弦處
     const note = (chord && chord.notes) ? chord.notes[index] : null;
 
     if(note){
       sendMidiToSynth(note);
       //debug用
-      if (output && note) output.playNote(note, 1, { duration: 500 }); 
+      console.log(`撥動${index}弦，音高${note}`);
     }
     //visual feedback
     this.strings[index].brightness = 1.0; 
