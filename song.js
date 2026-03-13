@@ -4,21 +4,24 @@ const IMUSE_SONGS = [
     category: "華語歌曲",
     url: "./midi/月亮代表我的心.mid",
     youtubeUrl: "https://www.youtube.com/watch?v=IiFm7AWP9n4",
-    firstBeatOffset: 12.85, //0:12.8秒左右,結束於1:52
+    firstBeatOffset: 12.85, //0:12.8秒左右,結束於1:52,
+    scene:"night"
   },
   {
     title: "聽海",
     category: "華語歌曲",
     url: "./midi/聽海.mid",
     youtubeUrl: "https://www.youtube.com/watch?v=mLk61pfiHQ0",
-    firstBeatOffset: 2.5, //約0:13秒左右
+    firstBeatOffset: 2.5, //約0:13秒左右,
+    scene:"ocean"
   },
   {
     title: "傷心酒店",
     category: "華語歌曲",
     url: "./midi/傷心酒店.mid",
     youtubeUrl: "https://www.youtube.com/watch?v=Jl0CAEZn9II",
-    firstBeatOffset: 2.5, //約0:17秒左右
+    firstBeatOffset: 2.5, //約0:17秒左右,
+    scene:"pub"
   },
   {
     title: "耶穌恩友（排灣族語）",

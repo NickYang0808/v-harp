@@ -16,9 +16,14 @@
 .text-info {
   color:#f5f2e8 !important;
 }
+/*scean*/
+body.lake {background-image: url('assets/lake.webp');}
+body.night {background-image: url('assets/night.webp');}
+body.ocean {background-image: url('assets/ocean.webp');}
+body.pub {background-image: url('assets/pub.webp');}
 
 body {
-  background-image: url('assets/lake.webp');
+  transition: background-image 1.5s ease-in-out;
   background-size: cover;
   background-position: center;
   background-attachment: fixed;

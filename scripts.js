@@ -68,7 +68,11 @@ function onPlayerStateChange(event) {
 // --- 4. 換歌邏輯 (放在最外層，確保 Selector 叫得到) ---
 window.switchSong = async function (selectedSong) {
   if (!selectedSong) return;
-
+  //change scean
+  if (selectedSong.scene) {
+      document.body.className = selectedSong.scene; // 切換 class 即可瞬間換圖
+  }
+  //change song
   console.log("🎵 切換歌曲：", selectedSong.title);
   const vId = getYouTubeID(selectedSong.youtubeUrl);
   const tryCueVideo = () => {
