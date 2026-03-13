@@ -11,7 +11,7 @@
 }
 
 body {
-  background-image: url('場景圖/lake.webp');
+  background-image: url('assets/lake.webp');
 
   background-size: cover;
   background-position: center;
