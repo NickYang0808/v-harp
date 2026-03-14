@@ -24,6 +24,25 @@ class Harp {
         scale:0.5+Math.random()*0.5
       });
     }
+    // 畫十字星 (Star)
+    _drawStar(ctx); {
+        ctx.beginPath();
+        ctx.moveTo(-10, 0); ctx.lineTo(10, 0);
+        ctx.moveTo(0, -10); ctx.lineTo(0, 10);
+        ctx.stroke();
+    }
+
+    // 畫圓圈 (Circle)
+    _drawCircle(ctx); {
+        ctx.beginPath();
+        ctx.arc(0, 0, 8, 0, Math.PI * 2);
+        ctx.stroke();
+    }
+
+    // 畫方塊 (Square)
+    _drawSquare(ctx); {
+        ctx.strokeRect(-7, -7, 14, 14);
+    }
     this.strings = Array.from({ length: this.stringCount }, () => ({
       brightness: 0,
       offset: 0,
@@ -72,7 +91,7 @@ class Harp {
 
       if(this.handHistory.length%5===0){
         const xOffset=canvasWidth/4;
-        this.noteAnimation('',{
+        this.noteAnimation('star',{
           x:mainFinger.x-xOffset,
           y:mainFinger.y
         });
@@ -134,23 +153,27 @@ class Harp {
       ctx.restore();  
     }
     //note
-    // 在 draw 的結尾（畫完軌跡後）
+    // 在 draw 的結尾
     this.particles.forEach(p => {
         ctx.save();
         ctx.globalAlpha = p.alpha;
-        ctx.translate(p.x, p.y); // 移動到對應位置
+        ctx.translate(p.x, p.y); 
         ctx.scale(p.scale, p.scale);
-
-        // 快速畫一個十字星
-        ctx.beginPath();
-        ctx.strokeStyle = "#99FF13";
+        ctx.strokeStyle = "#fff41c"; // 統一顏色，也可以存進 p 裡面
         ctx.lineWidth = 2;
-        // 橫線
-        ctx.moveTo(-10, 0); ctx.lineTo(10, 0);
-        // 直線
-        ctx.moveTo(0, -10); ctx.lineTo(0, 10);
-        ctx.stroke();
 
+        // 根據 type 定義畫法
+        switch(p.type) {
+            case 'star':
+                this._drawStar(ctx);
+                break;
+            case 'circle':
+                this._drawCircle(ctx);
+                break;
+            case 'square':
+                this._drawSquare(ctx);
+                break;
+        }
         ctx.restore();
     });
   }
