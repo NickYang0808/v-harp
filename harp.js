@@ -11,11 +11,6 @@ class Harp {
     this.stringTriggerCooldown = 30;
     this.lastTriggerTime = 0;
 
-    this.activeAnimationTime=0;
-    this.animationDuration=500;
-    this.handHistory=[];
-    this.maxHistory=20;
-    this.particles=[];
     this.strings = Array.from({ length: this.stringCount }, () => ({
       brightness: 0,
       offset: 0,
@@ -34,25 +29,7 @@ class Harp {
         scale:0.5+Math.random()*0.5
       });
     }
-  // 畫十字星 (Star)
-  _drawStar(ctx) {
-      ctx.beginPath();
-      ctx.moveTo(-10, 0); ctx.lineTo(10, 0);
-      ctx.moveTo(0, -10); ctx.lineTo(0, 10);
-      ctx.stroke();
-  }
-
-  // 畫圓圈 (Circle)
-  _drawCircle(ctx) {
-      ctx.beginPath();
-      ctx.arc(0, 0, 8, 0, Math.PI * 2);
-      ctx.stroke();
-  }
-
-  // 畫方塊 (Square)
-  _drawSquare(ctx) {
-      ctx.strokeRect(-7, -7, 14, 14);
-  }
+  
   update(frame, fingerPoints, currentChord) {
     const now = Date.now();
     const canTrigger = now - this.lastTriggerTime > this.stringTriggerCooldown;
@@ -84,33 +61,6 @@ class Harp {
         });
     }
     
-    if (fingerPoints && fingerPoints.length > 0) {
-      const mainFinger = fingerPoints[0]; // 取得陣列中的第一個手指對象
-      const px=mainFinger.x*1280;
-      const py=mainFinger.y*640;
-      //紀錄軌跡與設定長度
-      this.handHistory.push({ x: px, y:  py});
-      if (this.handHistory.length > this.maxHistory) {
-        this.handHistory.shift();
-      }
-    const isActive = (Date.now() - this.activeAnimationTime) < this.animationDuration;
-    if (isActive && this.handHistory.length % 5 === 0) {
-      const xOffset = 1280 / 4; 
-      // 這裡呼叫你的 noteAnimation
-      this.noteAnimation('star', {
-        x: px + xOffset,
-        y: py
-      });
-    }
-    }
-    //particles life
-    this.particles.forEach((p,index)=>{
-      p.x+=p.vx;
-      p.y+=p.vy;
-      p.alpha*=0.92;
-      p.life-=0.02;
-      if(p.alpha<0.01) this.particles.splice(index,1);
-    })
   }
 
   draw(ctx, frame, canvasWidth, canvasHeight) {
@@ -139,51 +89,7 @@ class Harp {
       }
       ctx.stroke();
     }
-    // 2. 【在迴圈外面】畫軌跡，這樣軌跡就會在最上層
-    if (this.handHistory.length > 5) {
-      ctx.save(); // 保護畫布狀態
-      const xOffset=canvasWidth/4;
-      ctx.beginPath();
-      ctx.strokeStyle = "rgba(153, 255, 19, 0.5)"; // 白色半透明軌跡
-      ctx.lineWidth = 3;
-      ctx.lineJoin = "round";
-      ctx.lineCap = "round";
-      ctx.shadowBlur = 15;
-      ctx.shadowColor = "white";
-
-      // 直接使用 x，不要再乘 canvasWidth
-      ctx.moveTo(this.handHistory[0].x + xOffset, this.handHistory[0].y);
-
-      for (let i = 1; i < this.handHistory.length; i++) {
-          ctx.lineTo(this.handHistory[i].x + xOffset, this.handHistory[i].y);
-      }
-      ctx.stroke();
-      ctx.restore();  
-    }
-    //note
-    // 在 draw 的結尾
-    this.particles.forEach(p => {
-        ctx.save();
-        ctx.globalAlpha = p.alpha;
-        ctx.translate(p.x, p.y); 
-        ctx.scale(p.scale, p.scale);
-        ctx.strokeStyle = "#fff41c"; // 統一顏色，也可以存進 p 裡面
-        ctx.lineWidth = 2;
-
-        // 根據 type 定義畫法
-        switch(p.type) {
-            case 'star':
-                this._drawStar(ctx);
-                break;
-            case 'circle':
-                this._drawCircle(ctx);
-                break;
-            case 'square':
-                this._drawSquare(ctx);
-                break;
-        }
-        ctx.restore();
-    });
+    
   }
 
   _calculateStringPos(frame, index, visualOffset = 0) {
@@ -213,7 +119,7 @@ class Harp {
       //debug用
       console.log(`撥動${index}弦，音高${note}`);
       //開啟動畫時間
-      this.activeAnimationTime = Date.now();
+     // this.activeAnimationTime = Date.now();
     }
     //visual feedback
     this.strings[index].brightness = 1.0; 
