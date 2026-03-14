@@ -36,7 +36,7 @@ const IMUSE_SONGS = [
     category: "華語歌曲",
     url: "./midi/歡喜就好.mid",
     youtubeUrl: "https://www.youtube.com/watch?v=GPoTmtykcGY",
-    firstBeatOffset: 26.240, //約0:17秒左右,
+    firstBeatOffset: 26.200, //約0:17秒左右,
     scene:"pub"
   },
   {
