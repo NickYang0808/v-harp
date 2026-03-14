@@ -12,7 +12,7 @@ const IMUSE_SONGS = [
     category: "華語歌曲",
     url: "./midi/聽海.mid",
     youtubeUrl: "https://www.youtube.com/watch?v=mLk61pfiHQ0",
-    firstBeatOffset: 2.5, //約0:13秒左右,
+    firstBeatOffset: 44.333, //約0:13秒左右,
     scene:"ocean"
   },
   {
