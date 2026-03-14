@@ -23,6 +23,14 @@ const IMUSE_SONGS = [
     firstBeatOffset: 20.3, //約0:17秒左右,
     scene:"pub"
   },
+    {
+    title: "你是我的花朵",
+    category: "華語歌曲",
+    url: "./midi/你是我的花朵.mid",
+    youtubeUrl: "https://www.youtube.com/watch?v=FXg4LXsg14s",
+    firstBeatOffset: 20.3, //約0:17秒左右,
+    scene:"pub"
+  },
   {
     title: "耶穌恩友（排灣族語）",
     category: "原民歌曲",
