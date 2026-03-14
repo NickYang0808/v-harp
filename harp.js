@@ -88,7 +88,7 @@ class Harp {
       }
 
       if(this.handHistory.length%5===0){
-        const xOffset=canvasWidth/4;
+        const xOffset=1280/4;
         this.noteAnimation('star',{
           x:mainFinger.x-xOffset,
           y:mainFinger.y
