@@ -91,9 +91,9 @@ window.switchSong = async function (selectedSong) {
   const infoContainer = document.querySelector('.song-info');
   if (infoContainer) {
       infoContainer.innerHTML = `
-        <h2 style="margin:0; font-size: 28px;">${selectedSong.title}</h2>
-        <p id="song-bpm-display" style="margin:5px 0 0 0; color: #666;">BPM: 解析中...</p>
-        <div id="timer-container" style="font-family: monospace; font-size: 1.2rem; color: #40e9ff; margin-top: 10px;">
+        <h2 style="margin:0; font-size: 36px; color: #ffffff">${selectedSong.title}</h2>
+        <p id="song-bpm-display" style="margin:5px 0 0 0; color: #ededed;">BPM: 解析中...</p>
+        <div id="timer-container" style="font-family: monospace; font-size: 1.2rem; color: #ffffff; margin-top: 10px;">
           Time: <span id="video-current-time">0.00</span> s
         </div>
       `;
