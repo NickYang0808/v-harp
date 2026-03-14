@@ -28,7 +28,7 @@ const IMUSE_SONGS = [
     category: "華語歌曲",
     url: "./midi/你是我的花朵.mid",
     youtubeUrl: "https://www.youtube.com/watch?v=FXg4LXsg14s",
-    firstBeatOffset: 20.3, //約0:17秒左右,
+    firstBeatOffset: 43.790, //約0:17秒左右,
     scene:"pub"
   },
   {
