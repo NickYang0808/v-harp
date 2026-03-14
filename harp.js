@@ -89,6 +89,8 @@ class Harp {
     }
     //particles life
     this.particles.forEach((p,index)=>{
+      p.x+=p.vx;
+      p.y+=p.vy;
       p.alpha*=0.92;
       p.life-=0.02;
       if(p.alpha<0.01) this.particles.splice(index,1);
@@ -196,13 +198,19 @@ class Harp {
       console.log(`撥動${index}弦，音高${note}`);
 
       if (this.handHistory.length > 0) {
-          const lastPos = this.handHistory[this.handHistory.length - 1];
-          // 如果你想讓星星出現在「偏離左邊」的軌跡上：
-          const xOffset = 1280 / 4; 
+        const lastPos = this.handHistory[this.handHistory.length - 1];
+        
+        // 關鍵：這裡的 xOffset 必須跟 draw 軌跡時的一模一樣
+        // 假設 canvasWidth 是 1280
+        const xOffset = 1280 / 4; 
+        
+        // 觸發多個粒子效果會更明顯
+        for(let i = 0; i < 3; i++) {
           this.noteAnimation('star', {
-              x: lastPos.x + xOffset,
-              y: lastPos.y
+            x: lastPos.x + xOffset, // 這裡確保跟軌跡重合
+            y: lastPos.y
           });
+        }
       }
     }else console.log(`第${index}沒音符`);//可測試和弦完整性
 
