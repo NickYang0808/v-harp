@@ -12,7 +12,18 @@ class Harp {
     this.lastTriggerTime = 0;
     this.handHistory=[];
     this.maxHistory=20;
+    this.particles=[];
 
+    noteAnimation(type,position);{
+      this.particles.push({
+        type:type,
+        x:position.x,
+        y:position.y,
+        alpha:1.0,
+        life:1.0,
+        scale:0.5+Math.random()*0.5
+      });
+    }
     this.strings = Array.from({ length: this.stringCount }, () => ({
       brightness: 0,
       offset: 0,
@@ -47,19 +58,32 @@ class Harp {
                 this._triggerString(i, currentChord);
                 this.lastTriggerTime = now;
             }
-            
             this.strings[i].wasInside[fingerID] = isInside;
         });
     }
-  //2.獨立紀錄軌跡檢查是否有抓到手指，有的話紀錄第一隻手指 (fingerPoints[0])
-  if (fingerPoints && fingerPoints.length > 0) {
-    const mainFinger = fingerPoints[0]; // 取得陣列中的第一個手指對象
-    this.handHistory.push({ x: mainFinger.x, y: mainFinger.y });
-    // 限制長度
-    if (this.handHistory.length > this.maxHistory) {
-      this.handHistory.shift();
+    //2.獨立紀錄軌跡檢查是否有抓到手指，有的話紀錄第一隻手指 (fingerPoints[0])
+    if (fingerPoints && fingerPoints.length > 0) {
+      const mainFinger = fingerPoints[0]; // 取得陣列中的第一個手指對象
+      this.handHistory.push({ x: mainFinger.x, y: mainFinger.y });
+      // 限制長度
+      if (this.handHistory.length > this.maxHistory) {
+        this.handHistory.shift();
+      }
+
+      if(this.handHistory.length%5===0){
+        const xOffset=canvasWidth/4;
+        this.noteAnimation('',{
+          x:mainFinger.x-xOffset,
+          y:mainFinger.y
+        });
+      }
     }
-  }
+    //particles life
+    this.particles.forEach((p,index)=>{
+      p.alpha*=0.92;
+      p.life-=0.02;
+      if(p.alpha<0.01) this.particles.splice(index,1);
+    })
   }
 
   draw(ctx, frame, canvasWidth, canvasHeight) {
@@ -109,6 +133,26 @@ class Harp {
       ctx.stroke();
       ctx.restore();  
     }
+    //note
+    // 在 draw 的結尾（畫完軌跡後）
+    this.particles.forEach(p => {
+        ctx.save();
+        ctx.globalAlpha = p.alpha;
+        ctx.translate(p.x, p.y); // 移動到對應位置
+        ctx.scale(p.scale, p.scale);
+
+        // 快速畫一個十字星
+        ctx.beginPath();
+        ctx.strokeStyle = "#99FF13";
+        ctx.lineWidth = 2;
+        // 橫線
+        ctx.moveTo(-10, 0); ctx.lineTo(10, 0);
+        // 直線
+        ctx.moveTo(0, -10); ctx.lineTo(0, 10);
+        ctx.stroke();
+
+        ctx.restore();
+    });
   }
 
   _calculateStringPos(frame, index, visualOffset = 0) {
