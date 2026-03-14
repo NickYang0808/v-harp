@@ -198,7 +198,6 @@ async function onResults(results) {
   if(!isReady){
     const ctx = canvasElement.getContext('2d');
     ctx.clearRect(0,0,canvasElement.width,canvasElement.height);
-    
     // 在畫布內也畫一個半透明的人影，比起單純 CSS 更有質感
     ctx.save();
     ctx.globalAlpha = 0.5; // 畫布層級的半透明
