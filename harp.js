@@ -51,10 +51,16 @@ class Harp {
             this.strings[i].wasInside[fingerID] = isInside;
         });
     }
-    this.handHistory.push({x:finger.x,y:finger.y});
-    if(this.handHistory.length>this.maxHistory){
+  // 2. 獨立紀錄軌跡 (解決 finger not defined)
+  // 檢查是否有抓到手指，有的話紀錄第一隻手指 (fingerPoints[0])
+  if (fingerPoints && fingerPoints.length > 0) {
+    const mainFinger = fingerPoints[0]; // 取得陣列中的第一個手指對象
+    this.handHistory.push({ x: mainFinger.x, y: mainFinger.y });
+    // 限制長度
+    if (this.handHistory.length > this.maxHistory) {
       this.handHistory.shift();
     }
+  }
   }
 
   draw(ctx, frame, canvasWidth, canvasHeight) {
